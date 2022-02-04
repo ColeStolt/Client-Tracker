@@ -2,7 +2,7 @@
 Small local application that stores, removes, and edits a client's information all on the user's machine.
 
 What is the program: Client Tracker is an application used to store and retrieve client information.
-		The application will a user to login, add a client, remove a client, edit a client,
+		The application will allow a user to login, add a client, remove a client, edit a client,
 		and assign different instructors to different clients. Java will be used to complete
 		this project due to its built-in GUI.
 
