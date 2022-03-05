@@ -16,7 +16,7 @@ public class Client {
     private boolean paidInFull;
 
     // Holds a list of children
-    ArrayList<Child> children = new ArrayList<Child>();
+    private ArrayList<Child> children = new ArrayList<Child>();
 
     // Default and parameterized constructor
     public Client(){
