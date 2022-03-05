@@ -1,4 +1,7 @@
+package DataObjects;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 public class Client {
     
@@ -43,7 +46,6 @@ public class Client {
     // Add child to client's list
     public void addChild(Child child){
         children.add(child);
-        System.out.println(children.get(0));
     }
 
     // Removes child based on name due to clients having
@@ -53,9 +55,18 @@ public class Client {
         // Not having the same first name as one another.
         for(int i = 0; i < children.size(); i++){
             if (children.get(i).getFirstName() == childFirstName){
+                // Inform of removed child
+                JOptionPane.showMessageDialog(null, "Child \"" + children.get(i).getFirstName() + "\" successfully.");
+                
+                // Remove the child
                 children.remove(i);
+
+                return;
             }
         }
+
+        // Let user know child does not exist
+        JOptionPane.showMessageDialog(null, "Child \"" + childFirstName + "\" does not exist. Nothing removed.");
     }
 
     // Setters / Getters
