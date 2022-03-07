@@ -1,6 +1,5 @@
 package GUI;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,6 +31,10 @@ import java.awt.event.ActionListener;
 
 public class LoginScreen {
     
+    // Data 
+    private String password;
+    private String username;
+
     // For password and username checking
     DataParser parse = new DataParser();
 
@@ -52,6 +55,7 @@ public class LoginScreen {
     FlowLayout flow = new FlowLayout(FlowLayout.CENTER, 5, 10);
     GridLayout grid = new GridLayout(3, 1);
     
+    // Buttons
     private JButton login = new JButton("         Login         ");
 
     // Font
@@ -90,8 +94,12 @@ public class LoginScreen {
         login.addActionListener(new ActionListener(){ // Anonymous class for button action
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(parse.hashAndRetrieve(usernameField.getText(), "ClientTracker\\Data\\usernames.txt"));
-                System.out.println(parse.hashAndRetrieve(passwordField.getText(), "ClientTracker\\Data\\passwords.txt"));
+                password = String.valueOf(passwordField.getPassword()); // Password converted to string and will float around in the string pool. THIS IS, DANGEROUS BUT IS FINE RIGHT NOW
+                username = usernameField.getText();
+                if (parse.hashAndRetrieve(username, "ClientTracker\\Data\\usernames.txt") && parse.hashAndRetrieve(password, "ClientTracker\\Data\\passwords.txt")){
+                    frame.dispose();
+                    new MainFrame("Client Tracker", 1280, 720);
+                }
                 
             }
         });
