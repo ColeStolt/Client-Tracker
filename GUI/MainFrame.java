@@ -1,5 +1,7 @@
 package GUI;
 
+import javax.swing.JFrame;
+
 /* This will hold the 3 Jpanels that make up the program:
     Client View
         - Shows a list of clients
@@ -18,6 +20,15 @@ package GUI;
         - Contains user name
 */
 
-public class MainFrame {
+public class MainFrame extends JFrame{
+
+    public MainFrame(String title, int width, int height){
+        super(title);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(width, height);
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
+
+    }
     
 }
