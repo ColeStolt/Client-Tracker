@@ -6,8 +6,7 @@ import javax.swing.JOptionPane;
 public class Client {
     
     // Client definitions
-    private String firstName;
-    private String lastName;
+    private String name;
     private String phoneNumber;
     private String address;
     private String startDate;
@@ -20,8 +19,7 @@ public class Client {
 
     // Default and parameterized constructor
     public Client(){
-        firstName = "null";
-        lastName = "null";
+        name = "null";
         phoneNumber = "000-000-0000";
         address = "null";
         startDate = "00/00/0000";
@@ -31,9 +29,8 @@ public class Client {
     }
 
     // Parameterized constructor
-    public Client(String firstName, String lastName, String phoneNumber, String address, String startDate, String endDate, float amountPerLesson, boolean paidInFull){
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Client(String name, String phoneNumber, String address, String startDate, String endDate, float amountPerLesson, boolean paidInFull){
+        this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.startDate = startDate;
@@ -71,19 +68,11 @@ public class Client {
 
     // Setters / Getters
     public String getFirstName() {
-        return this.firstName;
+        return this.name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFirstName(String name) {
+        this.name = name;
     }
 
     public String getPhoneNumber() {
