@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -96,10 +97,15 @@ public class LoginScreen {
             public void actionPerformed(ActionEvent e) {
                 password = String.valueOf(passwordField.getPassword()); // Password converted to string and will float around in the string pool. THIS IS, DANGEROUS BUT IS FINE RIGHT NOW
                 username = usernameField.getText();
-                if (parse.hashAndRetrieve(username, "ClientTracker\\Data\\usernames.txt") && parse.hashAndRetrieve(password, "ClientTracker\\Data\\passwords.txt")){
-                    frame.dispose();
-                    new MainFrame("Client Tracker", 1280, 720);
-                }
+                //if (parse.hashAndRetrieve(username, "ClientTracker\\Data\\usernames.txt") && parse.hashAndRetrieve(password, "ClientTracker\\Data\\passwords.txt")){
+                    frame.dispose();    // Removes login screen
+                    new MainFrame("Client Tracker", 1280, 720, usernameField.getText()); // Opens main application window if password is correct
+               //}
+                //else{   // Informs user of incorrect username or password
+                  // JOptionPane.showMessageDialog(null, "Incorrect username or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+                   
+                   // passwordField.setText("");
+              //}
                 
             }
         });
