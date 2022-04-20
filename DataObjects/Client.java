@@ -11,8 +11,10 @@ public class Client {
     private String address;
     private String startDate;
     private String endDate;
-    private float amountPerLesson;
-    private boolean paidInFull;
+    private String instructor;
+    private int numberOflessons;
+    private int numberOfChildren;
+    private int amountPerLesson;
 
     // Holds a list of children
     private ArrayList<Child> children = new ArrayList<Child>();
@@ -24,19 +26,23 @@ public class Client {
         address = "null";
         startDate = "00/00/0000";
         endDate = "00/00/0000";
-        amountPerLesson = 0.0f;
-        paidInFull = false;
+        setInstructor("null");
+        amountPerLesson = 0;
+        numberOfChildren = 0;
+        amountPerLesson = 0;
     }
 
     // Parameterized constructor
-    public Client(String name, String phoneNumber, String address, String startDate, String endDate, float amountPerLesson, boolean paidInFull){
+    public Client(String name, String phoneNumber, String address, String startDate, String endDate, String instructor, int numberOflessons, int numberOfChildren, int amountPerLesson){
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.setInstructor(instructor);
+        this.numberOflessons = numberOflessons;
+        this.numberOfChildren = numberOfChildren;
         this.amountPerLesson = amountPerLesson;
-        this.paidInFull = paidInFull;
     }
 
     // Client behaviors
@@ -107,19 +113,35 @@ public class Client {
         this.endDate = endDate;
     }
 
-    public float getAmountPerLesson() {
+    public String getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
+    }
+
+    public int getAmountPerLesson() {
         return this.amountPerLesson;
     }
 
-    public void setAmountPerLesson(float amountPerLesson) {
+    public void setAmountPerLesson(int amountPerLesson) {
         this.amountPerLesson = amountPerLesson;
     }
 
-    public boolean isPaidInFull() {
-        return this.paidInFull;
+    public void setNumberOfLessons(int numberOflessons){
+        this.numberOflessons = numberOflessons;
     }
 
-    public void setPaidInFull(boolean paidInFull) {
-        this.paidInFull = paidInFull;
+    public int getNumberOfLessons(){
+        return numberOflessons;
+    }
+
+    public void setNumberOfChildren(int numberOfChildren){
+        this.numberOfChildren = numberOfChildren;
+    }
+
+    public int getNumberOfChildren(){
+        return this.numberOfChildren;
     }
 }
