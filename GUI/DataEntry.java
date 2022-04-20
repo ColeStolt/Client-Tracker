@@ -6,11 +6,20 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.awt.FlowLayout;
 
+import DataObjects.Client;
 import DataObjects.CustomFont;
 import DataObjects.CustomJTextField;
 
@@ -24,6 +33,9 @@ import DataObjects.CustomJTextField;
     */
 
 public class DataEntry extends JPanel{
+
+    // Instructor names
+    String[] instructors = {"Charity", "Dennise", "Kaci", "Allie", "Cody"};
 
     // Font
     CustomFont font = new CustomFont(20);
@@ -40,16 +52,16 @@ public class DataEntry extends JPanel{
     private JPanel addressPanel = new JPanel(flow);
     private JPanel startDatePanel = new JPanel(flow);
     private JPanel endDatePanel = new JPanel(flow);
+    private JPanel instructorPanel = new JPanel(flow);
     private JPanel lessonsPanel = new JPanel(flow);
     private JPanel addClientPanel = new JPanel(flow);
 
-    // Labels
-    JLabel lessonLabel = new JLabel("# of lessons");
-
     // Buttons
     private JButton addClient = new JButton("       Add Client       ");
-    private JCheckBox paidInFull = new JCheckBox("Paid in full? |");
     private JComboBox<Integer> lessons = new JComboBox<>();
+    private JComboBox<Integer> amountPerLesson = new JComboBox<>();
+    private JComboBox<Integer> numberOfChildren = new JComboBox<>();
+    private JComboBox<String> instructorsBox = new JComboBox<>(instructors);
 
     // Text fields
     private CustomJTextField name = new CustomJTextField("Client Name", FIELD_SIZE);
@@ -58,9 +70,19 @@ public class DataEntry extends JPanel{
     private CustomJTextField startDate = new CustomJTextField("Start Date", FIELD_SIZE);
     private CustomJTextField endDate = new CustomJTextField("End Date", FIELD_SIZE);
 
-    public DataEntry(){
+    // Pointer to client hashmap
+    ArrayList<Client> clients;
 
-        populateComboBox();
+    // Pointer to clientViewer
+    ClientViewer viewer;
+
+    public DataEntry(ClientViewer viewer, ArrayList<Client> clients){
+
+        this.clients = clients;
+        this.viewer = viewer;
+        populateComboBox(lessons, 51);
+        populateComboBox(amountPerLesson, 201);
+        populateComboBox(numberOfChildren, 26);
         componentSetup();
         mainPanelSetup();
        
@@ -70,8 +92,47 @@ public class DataEntry extends JPanel{
         // Component Properties
         addClient.setFont(font);
         addClient.setBorder(new RoundedBorder(5));
-        paidInFull.setFont(font);
-        paidInFull.setBackground(Color.WHITE);
+
+        // Add client listener
+        addClient.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Remove all commas
+                removeAllCommas();
+
+                // Adds client to viewer and to file
+                Client client = new Client(name.getText(), phoneNumber.getText(), address.getText(), startDate.getText(), endDate.getText(), (String)instructorsBox.getSelectedItem(), lessons.getSelectedIndex(), numberOfChildren.getSelectedIndex(), amountPerLesson.getSelectedIndex());
+                
+                viewer.addClient(client);
+
+
+                // Add to hashmap as well
+                clients.add(client);
+
+                // Read file and store
+                try {
+                    BufferedWriter write = new BufferedWriter(new FileWriter("ClientTracker\\Data\\clients.txt", true));
+                    write.write(client.getFirstName()+","+client.getPhoneNumber()+","+client.getAddress()+","+client.getStartDate()+","+client.getEndDate()+","+instructorsBox.getSelectedItem()+","+client.getNumberOfLessons()+","+client.getNumberOfChildren()+","+client.getAmountPerLesson());
+                    write.newLine();
+                    write.close();
+                } catch (IOException x) {
+                    // TODO Auto-generated catch block
+                    x.printStackTrace();
+                }
+
+                // Reset data
+                name.setText("");
+                phoneNumber.setText("");
+                address.setText("");
+                startDate.setText("");
+                endDate.setText("");
+                numberOfChildren.setSelectedIndex(0);
+                lessons.setSelectedIndex(0);
+            }
+
+        });
+
         addClient.setBackground(new Color(146,210,147)); // Nice green color
 
         // Add components
@@ -80,10 +141,18 @@ public class DataEntry extends JPanel{
         addressPanel.add(address);
         startDatePanel.add(startDate);
         endDatePanel.add(endDate);
-        lessonsPanel.add(paidInFull);
-        lessonsPanel.add(lessons);
-        lessonsPanel.add(lessonLabel);
+        instructorPanel.add(instructorsBox);
+        instructorPanel.add(lessons);
+        instructorPanel.add(numberOfChildren);
+        instructorPanel.add(amountPerLesson);
         addClientPanel.add(addClient);
+
+        // Combo box options
+        instructorsBox.setFont(font);
+        numberOfChildren.setFont(font);
+        lessons.setFont(font);
+        amountPerLesson.setFont(font);
+
     
         // Set properties
         namePanel.setBackground(Color.WHITE);
@@ -91,7 +160,13 @@ public class DataEntry extends JPanel{
         addressPanel.setBackground(Color.WHITE);
         startDatePanel.setBackground(Color.WHITE);
         endDatePanel.setBackground(Color.WHITE);
+        instructorPanel.setBackground(Color.WHITE);
         lessonsPanel.setBackground(Color.WHITE);
+        instructorPanel.setBorder(new TitledBorder(new LineBorder(Color.WHITE), "Instructor / Lessons / Children / $", 0, 0, new CustomFont(14)));
+
+        // Lessons title
+        lessonsPanel.setBorder(new TitledBorder(new LineBorder(Color.BLACK), "Lesson/$ per lesson/# of children", 0, 0, new CustomFont(14)));
+
         addClientPanel.setBackground(Color.WHITE);
 
         addClientPanel.setBorder(new LineBorder(Color.BLACK)); // I use line border twice
@@ -112,20 +187,29 @@ public class DataEntry extends JPanel{
         this.add(addressPanel);
         this.add(startDatePanel);
         this.add(endDatePanel);
-        this.add(lessonsPanel);
+        this.add(instructorPanel);
         this.add(addClientPanel);
     }
 
     // Populates JComboBox and sets properties
-    private void populateComboBox(){
-        for (int i = 0; i < 51; i++) {
-            lessons.addItem(i);
+    private void populateComboBox(JComboBox combo, int maxNumber){
+        for (int i = 0; i < maxNumber; i++) {
+            combo.addItem(i);
         }
-        // Set label properties in here
-        lessonLabel.setFont(font);
+        
         // ComboBox properties
         lessons.setFont(new CustomFont(13));
     
+    }
+
+    // Removes all the commas before data is entered so
+    // The application does not read incorrect data
+    private void removeAllCommas(){
+        name.setText(name.getText().replace(',', ' '));
+        phoneNumber.setText(phoneNumber.getText().replace(',', ' '));
+        address.setText(address.getText().replace(',', ' '));
+        startDate.setText(startDate.getText().replace(',', ' '));
+        endDate.setText(endDate.getText().replace(',', ' '));
     }
     
 }
