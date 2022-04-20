@@ -3,7 +3,6 @@ package AlgorithmsAndDataStructures;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -100,9 +99,12 @@ public class DataParser {
             BufferedReader read = new BufferedReader(new FileReader(file));
             while((line = read.readLine()) != null){
                 if(item.equals(decode(line))){
+                    read.close();
                     return true;
                 }
             }
+            read.close(); // This is done so if a match is not found then
+                          // Still close the file
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
