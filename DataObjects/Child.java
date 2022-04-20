@@ -1,3 +1,4 @@
+package DataObjects;
 public class Child {
     
     // Child definitions
@@ -6,6 +7,13 @@ public class Child {
     private int numberOfLessons;
 
     // Default constructor
+    public Child(){
+        firstName = "null";
+        dateOfBirth = "00/00/0000";
+        numberOfLessons = 0;
+    }
+
+    // Parameterized Constructor
     public Child(String firstName, String dateOfBirth, int numberOfLessons){
         this.firstName = firstName;
         this.dateOfBirth = dateOfBirth;
