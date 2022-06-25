@@ -20,7 +20,7 @@ import java.io.IOException;
 public class DataParser {
     
     public DataParser(){
-
+        System.out.println("Hello from git!");
     }
 
     // Creates a file if one doesn't exist and then searchs the file for the requested item
