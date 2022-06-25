@@ -1,9 +1,7 @@
 package GUI;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -16,7 +14,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.awt.FlowLayout;
 
 import DataObjects.Client;
@@ -201,6 +198,7 @@ public class DataEntry extends JPanel{
         lessons.setFont(new CustomFont(13));
     
     }
+    
 
     // Removes all the commas before data is entered so
     // The application does not read incorrect data

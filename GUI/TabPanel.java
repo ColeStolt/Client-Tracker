@@ -1,7 +1,6 @@
 package GUI;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 // Simply holds the panes together in a neat package
 

@@ -4,7 +4,6 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-import DataObjects.Client;
 
 // This will get a refrence to a client from the hashmap
 // All edits made are made to the hashmap and reflected in the 
